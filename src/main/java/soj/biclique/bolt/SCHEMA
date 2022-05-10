@@ -1,0 +1,27 @@
+ReshuffleBolt:
+    private static final List<String> SCHEMA = ImmutableList.of("type", "relation", "timestamp", "key", "value", "boltID", "shardID");
+    ///type: shard, tuple   "shard", "null", 0L, 1, shards.encodeShardInShuffle(), String.valueOf(ithItem1.task), ithItem1.shard
+    ///shardID没用上
+    private static final List<String> TO_MONITOR_SCHEMA = ImmutableList.of("type", "relation", "emitTaskID", "emiShardID", "immTaskID", "immShardID", "minRange", "cursor", "maxRange");
+ ////还没用上，这个应该与joiner发送给reshuffle的修改路由表的元组是一样的。
+JoinBolt:
+    private static final List<String> TO_POST_SCHEMA = ImmutableList.of("currentMoment",
+        "tuplesStored", "joinTimes", "processingDuration", "latency", "migrationTime", "tuplesJoined", "resultNum", "load");
+
+    private static final List<String> TO_JOINER_SCHEMA = ImmutableList.of("type", "timestamp", "num", "value", "info");
+    ///type: shard, modify,
+    private static final List<String> TO_JOINER_MODIFY_SCHEMA = ImmutableList.of("type", "immShardID", "leftRightOrJump", "minRange", "cursor", "immTaskID");
+    //""modify", immigrateShardID, leftRightOrJump, "null", tmpCursor
+    ////"shard"
+    private static final List<String> TO_RESHUFFLER_SCHEMA = ImmutableList.of( "type", "relation", "emiShardID", "immTaskID", "immShardID", "minRange", "cursor", "maxRange", "numMigrateTuple");
+    ///"newShard", _taskRel, emigrateShardID, immTaskID, immigrateShardID, minRange, tmpCursor, maxRange
+    /////还没写完
+    private static final List<String> TO_MONITOR_SCHEMA = ImmutableList.of("type", "taskrel", "timestamp", "statistics");
+
+    Shard:
+    private static final List<String> SCHEMA = ImmutableList.of("type", "relation", "timestamp", "key", "value", "boltID", "shardID");//
+////√
+
+MonitorBolt：
+    private static final List<String> TO_JOINER_MIGRATE_SCHEMA = ImmutableList.of("type", "minLoadId", "minLoad", "nbLowShard");
+    ////type: migration,
